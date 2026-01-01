@@ -1,6 +1,7 @@
 #ifndef CONSTANTS
 #define CONSTANTS
 
+#include <formatters.hpp>
 
 #include <algorithm>
 #include <cstdint>
@@ -11,10 +12,12 @@
 #include <ranges>
 #include <type_traits>
 
+
 using u8 = uint8_t;
 using u16 = uint16_t;
 using u32 = uint32_t;
 using u64 = uint64_t;
+
 
 static constexpr u64 MAX_CASTABLE_SIZE = 64; //bytes
 
@@ -28,7 +31,15 @@ concept uint_type = std::is_arithmetic_v<T>;
 
 
 template <typename T>
-concept safe_cast_to_str = vec_type<T> || uint_type<T>;
+concept has_formatter = !uint_type<T> && requires (T& t) {
+	is_formatted<T>{} == std::true_type{};
+};
+
+
+
+
+template <typename T>
+concept safe_cast_to_str = vec_type<T> || uint_type<T> || has_formatter<T>;
 
 
 template <vec_type T>
@@ -46,6 +57,12 @@ std::string field_to_str(const T& val){
 	std::memcpy(buf, &val, n);
 	return std::string(buf);
 } 
+
+template <has_formatter T>
+std:: string field_to_str(const T& t){
+	return std::format("{}", t);
+}
+
 
 template <typename First, typename ...Rest>
 void log(std::ostream& stream, First& f, Rest&... r) {

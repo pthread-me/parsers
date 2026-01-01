@@ -1,9 +1,8 @@
-#include <constants.hpp>
-#include <cstdint>
 #include <string>
-#include <type_traits>
+
 #include <wave.hpp>
 #include <formatters.hpp>
+#include <utility.hpp>
 
 
 
@@ -18,11 +17,7 @@ std::string fun(const T& val){
 
 using namespace std;
 int main(){
-  //wave::File wave_file("tests/sample-9s.wav");
-  //std::array<u32,1> test{83};
-  u32 test = 82;
-  println("{}",field_to_str(test));
-  log_str(std::cout, test);
+	wave::File wave("tests/M1F1-Alaw-AFsp.wav");
 }
 
 
