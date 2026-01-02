@@ -17,7 +17,9 @@ std::string fun(const T& val){
 
 using namespace std;
 int main(){
-	wave::File wave("tests/M1F1-Alaw-AFsp.wav");
+	wave::File wave("tests/sample-9s.wav");
+  log_str(std::cerr, wave.fmt.fmt_code);
+  wave.save_to_file("result/sample.wav");
 }
 
 

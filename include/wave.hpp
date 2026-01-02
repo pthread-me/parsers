@@ -55,7 +55,6 @@ struct DataChunk {
   u32             ck_id{};
   u32             ck_size{};
   std::vector<u8> samples{};
-  bool            padding{}; // single byte if true
 };
 
 
@@ -65,7 +64,10 @@ class File{
 			init(file_path);
 		}
 	
-  private:
+		void load_from_file(const std::string& file_path);
+		void save_to_file(const std::string& file_path);
+
+  //private:
 		RiffChunk riff;
     FmtChunk  fmt;
     FactChunk fact;
@@ -76,13 +78,13 @@ class File{
 
     void init(const std::string& file_path);
     void load(std::ifstream& src_file);
-    void save(std::ostream& dst_file);
+    void save(std::ofstream& dst_file);
 		
 
-		void validate_riff();
-		void validate_fmt();
-		void validate_fact();
-		void validate_data();
+		void validate_riff() const;
+		void validate_fmt() const;
+		void validate_fact() const;
+		void validate_data() const;
 		
 };
 }
