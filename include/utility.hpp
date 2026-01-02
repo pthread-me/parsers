@@ -21,30 +21,24 @@ using u64 = uint64_t;
 
 static constexpr u64 MAX_CASTABLE_SIZE = 64; //bytes
 
-
 template <typename T>
-concept vec_type = std::ranges::contiguous_range<T> && requires(T& t){
+concept vec_type = std::ranges::contiguous_range<T> && requires(T& t) {
 	t.size() < MAX_CASTABLE_SIZE; t.data();
 };
 
 template <typename T>
-concept uint_type = std::is_arithmetic_v<T>; 
-
+concept uint_type = std::is_arithmetic_v<T>;
 
 template <typename T>
 concept has_formatter = !uint_type<T> && requires (T& t) {
 	is_formatted<T>{} == std::true_type{};
 };
 
-
-
-
 template <typename T>
 concept safe_cast_to_str = vec_type<T> || uint_type<T> || has_formatter<T>;
 
-
 template <vec_type T>
-std::string field_to_str(const T& vec){
+std::string field_to_str(const T& vec) {
 	u64 n = std::min(vec.size(), MAX_CASTABLE_SIZE);
 	char buf[MAX_CASTABLE_SIZE]= {};
 	std::memcpy(buf, vec.data(), n);
@@ -52,18 +46,17 @@ std::string field_to_str(const T& vec){
 }
 
 template <uint_type T>
-std::string field_to_str(const T& val){
+std::string field_to_str(const T& val) {
 	u64 n = std::min(sizeof(val), MAX_CASTABLE_SIZE);
 	char buf[MAX_CASTABLE_SIZE]= {};
 	std::memcpy(buf, &val, n);
 	return std::string(buf);
-} 
-
-template <has_formatter T>
-std:: string field_to_str(const T& t){
-	return std::format("{}", t);
 }
 
+template <has_formatter T>
+std:: string field_to_str(const T& t) {
+	return std::format("{}", t);
+}
 
 template <typename First, typename ...Rest>
 void log(std::ostream& stream, First& f, Rest&... r) {
@@ -78,10 +71,6 @@ void log_str(std::ostream& stream, First& f, Rest&... r) {
   (std::print(stream, " {}", field_to_str(r)), ...);
   std::println(stream);
 }
-
-
-
-
 
 /*
  * Fun templating from stack overflow

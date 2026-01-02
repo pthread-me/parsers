@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 4.0)
 
-project(P)
+project(Parsers)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 set(CMAKE_CXX_STANDARD 23)
@@ -12,9 +12,9 @@ add_executable(main ${SOURCES})
 target_include_directories(main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 target_compile_options(main PRIVATE
-  -Wall
-  -Werror
-  -Wextra
-  -Wpedantic
-  -O0
+ -Wall
+ -Werror
+ -Wextra
+ -Wpedantic
+ -O0
 )

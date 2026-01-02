@@ -1,12 +1,11 @@
-#include <format>
-#include <type_traits>
-
 // Skeletal file with SFINAE structs to check
 // for formatter specializations
 
-
 #ifndef FORMATTER_SPECIALIZERS
 #define FORMATTER_SPECIALIZERS
+
+#include <format>
+#include <type_traits>
 
 template <typename T, typename = void>
 struct is_formatted : std::false_type{};
