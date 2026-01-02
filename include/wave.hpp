@@ -42,7 +42,7 @@ struct FmtChunk {
   u16               extension_size{};
   u16               valid_bits{};
   u32               speaker_pos{};
-  std::array<u8,16>	GUID{};
+  std::array<byte,16>	GUID{};
 };
 
 struct FactChunk {
@@ -54,7 +54,7 @@ struct FactChunk {
 struct DataChunk {
   u32             ck_id{};
   u32             ck_size{};
-  std::vector<u8> samples{};
+  std::vector<std::byte> samples{};
 };
 
 

@@ -13,13 +13,14 @@
 #include <type_traits>
 
 
-using u8 = uint8_t;
+using byte = std::byte;
+using u8 = uint8_t; // not to be used in place of a byte
 using u16 = uint16_t;
 using u32 = uint32_t;
 using u64 = uint64_t;
 
-
 static constexpr u64 MAX_CASTABLE_SIZE = 64; //bytes
+
 
 template <typename T>
 concept vec_type = std::ranges::contiguous_range<T> && requires(T& t){

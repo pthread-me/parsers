@@ -140,10 +140,8 @@ void wave::File::load(std::ifstream& fs){
 
 	validate_data();
   this->data.samples.reserve(this->data.ck_size);
-  std::copy(std::istreambuf_iterator(fs), std::istreambuf_iterator<char>(), std::back_inserter(this->data.samples));
 
-	//fs.read(reinterpret_cast<char*>(this->data.samples.data()),	sizeof(this->data.ck_size));
-  
+	fs.read(reinterpret_cast<char*>(this->data.samples.data()), static_cast<std::streamsize>(this->data.ck_size));
 }
 
 
@@ -198,12 +196,8 @@ void wave::File::save(std::ofstream& fs) {
 			fs.write(reinterpret_cast<char*>(&this->data.ck_size),						sizeof(this->data.ck_size));
   }
 
-	fs.write(reinterpret_cast<char*>(this->data.samples.data()),	this->data.samples.size());
-
+	fs.write(reinterpret_cast<char*>(this->data.samples.data()),	this->data.ck_id);
   if (this->data.ck_size%2 == 1){
     fs.write(0, sizeof(char));
   }
 }
-
-
-
